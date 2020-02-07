@@ -1,19 +1,30 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>List</ion-title>
+    <ion-title>Shopping list</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" fullscreen>
   <ion-list>
     <ion-item>
       <ion-label>New item</ion-label>
-      <ion-input (keypress)="addItem($event)" type="text" required name="item" [(ngModel)]="newItem"></ion-input>
+      <ion-input #myInput placeholder="Enter name" (keypress)="addItem($event)" 
+        type="text" required [(ngModel)]="newItem"></ion-input>
+      <ion-input placeholder="Enter quantity" min="1" (keypress)="addItem($event)" type="number"
+      required [(ngModel)]="newItemQuantity"></ion-input>
     </ion-item>
   </ion-list>
   <ion-list>
-    <ion-item *ngFor="let item of items">
-      {{item}}
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of items;index as i">
+      <ion-item>
+        {{item.quantity}}
+        {{item.name}}
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-button color="danger" (click)="removeItem(i)">
+          <ion-icon name="trash"></ion-icon>Delete
+        </ion-button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
